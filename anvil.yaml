@@ -11,6 +11,48 @@ db_schema:
       type: string
     server: full
     title: fav_teams
+  tips:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: gameday
+      target: top_matches
+      type: link_single
+    - admin_ui: {order: 1, width: 200}
+      name: user
+      target: users
+      type: link_single
+    - admin_ui: {order: 2, width: 200}
+      name: home_score
+      type: number
+    - admin_ui: {order: 3, width: 200}
+      name: away_score
+      type: number
+    server: full
+    title: tips
+  top_matches:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: season
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: gameday
+      type: number
+    - admin_ui: {order: 2, width: 200}
+      name: home_team
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: away_team
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: home_score
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: away_score
+      type: number
+    server: full
+    title: top_matches
   users:
     client: none
     columns:
@@ -33,8 +75,8 @@ db_schema:
     server: full
     title: users
 dependencies: []
-name: M3 App 2
-package_name: M3_App_2
+name: tippclub
+package_name: tippclub
 renamed: true
 runtime_options:
   client_version: '3'
