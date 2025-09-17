@@ -1,7 +1,7 @@
 allow_embedding: false
 db_schema:
   fav_teams:
-    client: none
+    client: search
     columns:
     - admin_ui: {order: 0, width: 200}
       name: team_id
@@ -12,7 +12,7 @@ db_schema:
     server: full
     title: fav_teams
   tips:
-    client: none
+    client: search
     columns:
     - admin_ui: {order: 0, width: 200}
       name: gameday
@@ -31,7 +31,7 @@ db_schema:
     server: full
     title: tips
   top_matches:
-    client: none
+    client: search
     columns:
     - admin_ui: {order: 0, width: 200}
       name: season
@@ -54,7 +54,7 @@ db_schema:
     server: full
     title: top_matches
   users:
-    client: none
+    client: search
     columns:
     - admin_ui: {order: 0, width: 200}
       name: user_name

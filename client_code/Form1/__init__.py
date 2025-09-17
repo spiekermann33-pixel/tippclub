@@ -11,3 +11,9 @@ class Form1(Form1Template):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+    # fill drop_down_gameday
+    game_days = []
+    for row in app_tables.top_matches.search():
+      game_days.append(str(row["gameday"]))
+    self.drop_down_gameday.items = game_days
+
