@@ -18,6 +18,8 @@ class Form1(Form1Template):
     self.drop_down_gameday.items = game_days
 
     # fill user tips for gameday
-    self.user_tips_rows.items = [
-      {"name":"Henrik","club":"Gladbach"}
-    ]    
+    topmatch = app_tables.top_matches.get(gameday=3)
+    user_tips = []
+    for row in app_tables.tips.search(gameday=topmatch):
+      user_tips.append({"tip" : str(row["home_score"]) + str(row["away_score"])})
+    self.repeating_panel_user_tips.items = user_tips

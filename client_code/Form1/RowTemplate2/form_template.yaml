@@ -1,7 +1,7 @@
 components:
 - layout_properties: {column: OJLQEN}
-  name: label_1
+  name: rich_text_1
   properties: {}
-  type: Label
+  type: RichText
 container: {type: DataRowPanel}
 is_package: true
