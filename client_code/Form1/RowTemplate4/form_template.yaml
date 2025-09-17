@@ -1,6 +1,6 @@
 components:
 - data_bindings:
-  - {code: 'self.item[''tip'']', property: text, writeback: false}
+  - {code: 'self.item[''tip'']', property: text, writeback: true}
   layout_properties: {column: VJQQOR}
   name: text_box_1
   properties: {}
