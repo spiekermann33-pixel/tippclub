@@ -17,3 +17,7 @@ class Form1(Form1Template):
       game_days.append(str(row["gameday"]))
     self.drop_down_gameday.items = game_days
 
+    # fill user tips for gameday
+    self.user_tips_rows.items = [
+      {"name":"Henrik","club":"Gladbach"}
+    ]    
