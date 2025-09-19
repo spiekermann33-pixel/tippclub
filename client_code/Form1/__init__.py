@@ -18,6 +18,23 @@ class Form1(Form1Template):
     # fill user tips for gameday
     self._set_data_grid_user_tips(int(self.drop_down_gameday.selected_value))
 
+    # fill matchup label
+    self.set_matchup_label(int(self.drop_down_gameday.selected_value))
+    
+  def set_matchup_label(self, gameday):
+    top_match = app_tables.top_matches.get(season="2025/2026", gameday=gameday)
+
+    home_score, away_score = "",""
+    if top_match["home_score"]:
+      home_score = str(top_match["home_score"])
+    if top_match["away_score"]:
+      away_score = str(top_match["away_score"])
+      
+    result_string = ""
+    if home_score and away_score:
+      result_string = "\t" + home_score + " : " + away_score
+    self.label_matchup.text = top_match["home_team"] + \
+            " : " + top_match["away_team"] + result_string
   def _set_drop_down_gameday(self, ):
     game_days = []
     for row in app_tables.top_matches.search():
@@ -43,7 +60,9 @@ class Form1(Form1Template):
 
   def drop_down_gameday_change(self, **event_args):
     """This method is called when an item is selected"""
-    self._set_data_grid_user_tips(int(self.drop_down_gameday.selected_value))
+    gameday_num = int(self.drop_down_gameday.selected_value)
+    self._set_data_grid_user_tips(gameday_num)
+    self.set_matchup_label(gameday_num)
 
   def button_save_click(self, **event_args):
     """This method is called when the button is clicked"""
