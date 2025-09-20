@@ -51,6 +51,9 @@ db_schema:
     - admin_ui: {order: 5, width: 200}
       name: away_score
       type: number
+    - admin_ui: {order: 6, width: 200}
+      name: jackpot
+      type: number
     server: full
     title: top_matches
   users:
