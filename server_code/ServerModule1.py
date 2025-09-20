@@ -27,7 +27,7 @@ def get_matchup(season="2025/2026",gameday=1):
 def create_tip_image():
   gameday = 4
   df_user_tips = pd.DataFrame(get_user_tips(gameday=gameday))
-  matchup = get_matchup(gameday=gameday)  # z. B. {"spieltag": 3, "heim": "Wolfsburg", "auswärts": "Köln", "preisgeld": 144}
+  matchup = get_matchup(gameday=gameday)
 
   # Tabellenparameter
   col_widths = [150, 100, 100, 100]  # Spaltenbreiten
@@ -51,8 +51,8 @@ def create_tip_image():
     font_title = font
 
     # --- Überschrift ---
-  title_text = f"Spieltag {gameday}  Begegnung: {matchup}"
-  prize_text = f"Preisgeld: {50} EUR   Ergebnis: ____"
+  title_text = f"Spieltag {gameday}                                         Begegnung: {matchup}"
+  prize_text = f"Preisgeld: {192} EUR                     Ergebnis: ____"
 
   draw.text((10, 10), title_text, fill="black", font=font_title)
   draw.text((10, 45), prize_text, fill="black", font=font)

@@ -39,6 +39,7 @@ class Form1(Form1Template):
     game_days = []
     for row in app_tables.top_matches.search():
       game_days.append(str(row["gameday"]))
+    game_days.sort(reverse=True)
     self.drop_down_gameday.items = game_days
 
   def _set_data_grid_user_tips(self, gameday):
@@ -67,6 +68,7 @@ class Form1(Form1Template):
   def button_save_click(self, **event_args):
     """This method is called when the button is clicked"""
     gameday = app_tables.top_matches.get(season="2025/2026",gameday=int(self.drop_down_gameday.selected_value))
+    print(gameday)
     for item in self.repeating_panel_user_tips.items:
       user = item['user']
       tip_text = item.get("tip","")
@@ -75,12 +77,14 @@ class Form1(Form1Template):
         home_score, away_score = [int(x) for x in tip_text.split(":")]
       except Exception:
         home_score, away_score = None, None  # ungültig oder leer      
-
+      print(home_score,away_score)
       user_tip = app_tables.tips.get(gameday=gameday, user=user)
       # wenn user bereits tipp abgegeben hat
+      
       if user_tip:
         user_tip.update(home_score=home_score,away_score=away_score)
-      elif home_score and away_score:
+      elif home_score != None and away_score != None:
+        print("add row")
         app_tables.tips.add_row(gameday=gameday,user=user,home_score=home_score,away_score=away_score)
 
   def button_save_and_download_click(self, **event_args):
