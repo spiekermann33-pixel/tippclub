@@ -1,2 +1,4 @@
-pillow==11.3.0
 pandas==2.3.2
+great-tables==0.18.0
+html2image==2.0.7
+weasyprint==43rc2

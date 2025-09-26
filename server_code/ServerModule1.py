@@ -2,9 +2,14 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+import anvil.media
+
 from io import BytesIO
-from PIL import Image, ImageDraw, ImageFont
 import pandas as pd
+from great_tables import GT
+import weasyprint
+import io
+import os
 
 def get_user_tips(season="2025/2026",gameday=1):
   gameday = app_tables.top_matches.get(season=season, gameday=gameday)
@@ -16,7 +21,7 @@ def get_user_tips(season="2025/2026",gameday=1):
       user_tip_string = str(user_tip["home_score"]) + " : " + str(user_tip["away_score"])
       user_tips.append({"Name":user['user_name'], "Tipp": user_tip_string,"Strafe":""})
     else:
-      user_tips.append({"Name":user['user_name'], "Tipp": "","Strafe":"2 EUR"})
+      user_tips.append({"Name":user['user_name'], "Tipp": "","Strafe":"2 €"})
   return user_tips
 
 def get_matchup(season="2025/2026",gameday=1):
@@ -25,68 +30,27 @@ def get_matchup(season="2025/2026",gameday=1):
   
 @anvil.server.callable
 def create_tip_image():
-  gameday = 4
+  gameday = 5
   df_user_tips = pd.DataFrame(get_user_tips(gameday=gameday))
+  df_user_tips["Sieg"] = ""
+  df_user_tips["Tipp"] = df_user_tips["Tipp"] + "\t"
   matchup = get_matchup(gameday=gameday)
 
-  # Tabellenparameter
-  col_widths = [150, 100, 100, 100]  # Spaltenbreiten
-  row_height = 40
-  header_height = 50
+  nbsp = "\u00A0" 
+  header_string = f"Spieltag: {gameday} {nbsp*8} Begegnung: {matchup}"
+  subtitle_string = f"Preisgeld: {48} € {nbsp*45} Ergebnis: __________"
+  # Tabelle mit great-tables
+  gt_tbl = (
+    GT(df_user_tips)
+      .tab_header(title=header_string, subtitle=subtitle_string)
+      .tab_options(table_font_size="14px")
+  )
 
-  # Höhe für die Überschrift reservieren
-  title_height = 80
-  img_width = sum(col_widths)
-  img_height = title_height + header_height + row_height * len(df_user_tips)
+  # HTML erzeugen
+  html_str = gt_tbl.as_raw_html()
 
-  img = Image.new("RGB", (img_width, img_height), "white")
-  draw = ImageDraw.Draw(img)
+  # Mit WeasyPrint HTML -> PNG in Memory konvertieren
+  png_bytes = weasyprint.HTML(string=html_str).write_png()
 
-  # Schriftarten
-  try:
-    font = ImageFont.truetype("arial.ttf", 20)
-    font_title = ImageFont.truetype("arial.ttf", 26)
-  except:
-    font = ImageFont.load_default()
-    font_title = font
-
-    # --- Überschrift ---
-  title_text = f"Spieltag {gameday}                                         Begegnung: {matchup}"
-  prize_text = f"Preisgeld: {192} EUR                     Ergebnis: ____"
-
-  draw.text((10, 10), title_text, fill="black", font=font_title)
-  draw.text((10, 45), prize_text, fill="black", font=font)
-
-  # --- Tabellenüberschriften ---
-  headers = ["Name", "Tipp", "Strafe", "Sieg"]
-  x = 0
-  for i, h in enumerate(headers):
-    draw.rectangle(
-      [x, title_height, x + col_widths[i], title_height + header_height],
-      outline="black",
-      width=2,
-    )
-    draw.text((x + 10, title_height + 10), h, fill="black", font=font)
-    x += col_widths[i]
-
-    # --- Zeilen zeichnen ---
-  y = title_height + header_height
-  for _, row in df_user_tips.iterrows():
-    x = 0
-    for i, key in enumerate(headers):
-      text = str(row.get(key, ""))
-      draw.rectangle(
-        [x, y, x + col_widths[i], y + row_height],
-        outline="black",
-        width=1,
-      )
-      draw.text((x + 10, y + 10), text, fill="black", font=font)
-      x += col_widths[i]
-    y += row_height
-
-    # In Bytes konvertieren
-  buf = BytesIO()
-  img.save(buf, format="PNG")
-  buf.seek(0)
-
-  return anvil.BlobMedia("image/png", buf.read(), name="tabelle.png")
+  # als BlobMedia zurückgeben
+  return anvil.BlobMedia("image/png", png_bytes, name="Tipprunde.png")
