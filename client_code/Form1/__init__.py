@@ -75,14 +75,12 @@ class Form1(Form1Template):
         home_score, away_score = [int(x) for x in tip_text.split(":")]
       except Exception:
         home_score, away_score = None, None  # ungültig oder leer      
-      print(home_score,away_score)
       user_tip = app_tables.tips.get(gameday=gameday, user=user)
       # wenn user bereits tipp abgegeben hat
   
       if user_tip:
         user_tip.update(home_score=home_score,away_score=away_score)
       elif home_score != None and away_score != None:
-        print("add row")
         app_tables.tips.add_row(gameday=gameday,user=user,home_score=home_score,away_score=away_score)
 
   def button_save_click(self, **event_args):
