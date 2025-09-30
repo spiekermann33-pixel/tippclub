@@ -30,7 +30,7 @@ def get_matchup(season="2025/2026",gameday=1):
   
 @anvil.server.callable
 def create_tip_image():
-  gameday = 5
+  gameday = 6
   df_user_tips = pd.DataFrame(get_user_tips(gameday=gameday))
   df_user_tips["Sieg"] = ""
   df_user_tips["Tipp"] = df_user_tips["Tipp"] + "\t"
