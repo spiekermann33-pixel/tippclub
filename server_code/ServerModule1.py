@@ -10,6 +10,8 @@ from great_tables import GT
 import weasyprint
 import io
 import os
+import base64
+from PIL import Image
 
 def get_user_tips(season="2025/2026",gameday=1):
   gameday = app_tables.top_matches.get(season=season, gameday=gameday)
@@ -27,14 +29,35 @@ def get_user_tips(season="2025/2026",gameday=1):
 def get_matchup(season="2025/2026",gameday=1):
   gameday = app_tables.top_matches.get(season=season, gameday=gameday)
   return gameday["home_team"] + " : " + gameday["away_team"]
+
+# Hilfsfunktion: BlobMedia oder LazyMedia -> Base64-String
+def to_data_url(media_obj):
+  if not media_obj:
+    return ""
+  try:
+    # sowohl LazyMedia als auch BlobMedia haben .get_bytes()
+    data = media_obj.get_bytes()
+    b64 = base64.b64encode(data).decode("utf-8")
+    return f"data:image/png;base64,{b64}"
+  except Exception as e:
+    print("⚠️ Fehler bei der Medienkonvertierung:", e)
+    return ""
+      
+def get_team_logos(df):
+  logos = app_tables.fav_teams.get(team_id=1)
+  print(logos)
+  df["Verein"] = to_data_url(logos["logo"])
+  return df
   
 @anvil.server.callable
-def create_tip_image():
-  gameday = 6
+def create_tip_image(gameday):
   df_user_tips = pd.DataFrame(get_user_tips(gameday=gameday))
   df_user_tips["Sieg"] = ""
   df_user_tips["Tipp"] = df_user_tips["Tipp"] + "\t"
   matchup = get_matchup(gameday=gameday)
+  
+  # df_user_tips = get_team_logos(df_user_tips)
+  # print(df_user_tips)
 
   nbsp = "\u00A0" 
   header_string = f"Spieltag: {gameday} {nbsp*8} Begegnung: {matchup}"
@@ -51,6 +74,12 @@ def create_tip_image():
 
   # Mit WeasyPrint HTML -> PNG in Memory konvertieren
   png_bytes = weasyprint.HTML(string=html_str).write_png()
-
+  
+  img = Image.open(BytesIO(png_bytes))
+  cropped = img.crop(img.getbbox())
+  out = BytesIO()
+  cropped.save(out, format="PNG")
+  png_bytes = out.getvalue()
+  
   # als BlobMedia zurückgeben
-  return anvil.BlobMedia("image/png", png_bytes, name="Tipprunde.png")
+  return anvil.BlobMedia("image/png", png_bytes, name=f"Tipprunde_{gameday}.png")

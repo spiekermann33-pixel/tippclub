@@ -80,7 +80,7 @@ class Form1(Form1Template):
   
       if user_tip:
         user_tip.update(home_score=home_score,away_score=away_score)
-      elif home_score != None and away_score != None:
+      elif home_score is not None and away_score is not None:
         app_tables.tips.add_row(gameday=gameday,user=user,home_score=home_score,away_score=away_score)
 
   def button_save_click(self, **event_args):
@@ -90,5 +90,6 @@ class Form1(Form1Template):
   def button_save_and_download_click(self, **event_args):
     """This method is called when the button is clicked"""
     self.save_tips()
-    media = anvil.server.call('create_tip_image')
+    gameday = int(self.drop_down_gameday.selected_value)
+    media = anvil.server.call('create_tip_image',gameday)
     anvil.media.download(media)
