@@ -8,5 +8,35 @@ components:
   name: add_new_tips
   properties: {text: neu Tipps eintragen}
   type: Button
-container: {type: ColumnPanel}
+- layout_properties: {grid_position: 'TPFDAP,HJFXML'}
+  name: label_2
+  properties: {text: 'Spieltag:'}
+  type: Label
+- layout_properties: {grid_position: 'TPFDAP,MSIHBG'}
+  name: drop_down_gameday
+  properties: {}
+  type: DropDown
+- layout_properties: {grid_position: 'OMBJBP,XZPXYA'}
+  name: label_3
+  properties: {text: 'Heimteam:'}
+  type: Label
+- layout_properties: {grid_position: 'OMBJBP,CHBWQJ'}
+  name: text_box_hometeam
+  properties: {}
+  type: TextBox
+- layout_properties: {grid_position: 'OMBJBP,QKXUVC'}
+  name: label_4
+  properties: {text: 'Auswärtsteam:'}
+  type: Label
+- layout_properties: {grid_position: 'OMBJBP,RNCKUO'}
+  name: text_box_awayteam
+  properties: {}
+  type: TextBox
+- layout_properties: {grid_position: 'LTBAMU,JUQJTG'}
+  name: button_save
+  properties: {text: Speichern}
+  type: Button
+container:
+  properties: {col_widths: '{"HJFXML":10,"MSIHBG":50}'}
+  type: ColumnPanel
 is_package: true
