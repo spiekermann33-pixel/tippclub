@@ -93,3 +93,7 @@ class Form1(Form1Template):
     gameday = int(self.drop_down_gameday.selected_value)
     media = anvil.server.call('create_tip_image',gameday)
     anvil.media.download(media)
+
+  def add_new_topmatch_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    open_form("Form1.add_new_match")
