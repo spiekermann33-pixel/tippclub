@@ -32,7 +32,8 @@ components:
   name: text_box_awayteam
   properties: {}
   type: TextBox
-- layout_properties: {grid_position: 'LTBAMU,JUQJTG'}
+- event_bindings: {click: button_save_click}
+  layout_properties: {grid_position: 'LTBAMU,JUQJTG'}
   name: button_save
   properties: {text: Speichern}
   type: Button

@@ -38,3 +38,15 @@ class add_new_match(add_new_matchTemplate):
     selected_gameday = str(min(highest_existing_gameday + 1, 34))
     self.drop_down_gameday.selected_value = selected_gameday
 
+  def button_save_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    gameday = int(self.drop_down_gameday.selected_value)
+    home_tean = self.text_box_hometeam.text
+    away_team = self.text_box_awayteam.text
+
+    gameday = app_tables.top_matches.get(gameday=gameday)
+    if gameday is not None:
+      pass
+
+    
+
