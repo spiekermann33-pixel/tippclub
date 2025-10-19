@@ -1,7 +1,15 @@
 components:
-- layout_properties: {grid_position: 'ASKFBA,AMZJQU'}
+- layout_properties: {grid_position: 'ASKFBA,AMZJQU UBPWJL,PZGWOQ'}
   name: label_1
   properties: {text: 'Hinzufügen eines neuen Topspiels:'}
+  type: Label
+- layout_properties: {grid_position: 'ASKFBA,AMZJQU CBCKOL,HFBKKY'}
+  name: label_8
+  properties: {text: 'Saison:'}
+  type: Label
+- layout_properties: {grid_position: 'ASKFBA,AMZJQU CBCKOL,CZQWFZ'}
+  name: label_season
+  properties: {text: 2025/2026}
   type: Label
 - event_bindings: {click: add_new_tips_click}
   layout_properties: {grid_position: 'ASKFBA,LNQFHP'}
@@ -12,7 +20,8 @@ components:
   name: label_2
   properties: {text: 'Spieltag:'}
   type: Label
-- layout_properties: {grid_position: 'TPFDAP,MSIHBG'}
+- event_bindings: {change: drop_down_gameday_change}
+  layout_properties: {grid_position: 'TPFDAP,MSIHBG'}
   name: drop_down_gameday
   properties: {}
   type: DropDown
@@ -38,7 +47,7 @@ components:
   type: Label
 - layout_properties: {grid_position: 'CWAFGT,CPFKVG'}
   name: text_box_home_goals
-  properties: {}
+  properties: {type: number}
   type: TextBox
 - layout_properties: {grid_position: 'CWAFGT,NCOLPW'}
   name: label_6
@@ -46,7 +55,15 @@ components:
   type: Label
 - layout_properties: {grid_position: 'CWAFGT,DRZHCL'}
   name: text_box_away_goals
-  properties: {}
+  properties: {type: number}
+  type: TextBox
+- layout_properties: {grid_position: 'JASFJV,PGSFBI'}
+  name: label_7
+  properties: {text: 'Preisgeld:'}
+  type: Label
+- layout_properties: {grid_position: 'JASFJV,XMNXAK'}
+  name: text_box_jackpot
+  properties: {placeholder: '', type: number}
   type: TextBox
 - event_bindings: {click: button_save_click}
   layout_properties: {grid_position: 'LTBAMU,JUQJTG'}
