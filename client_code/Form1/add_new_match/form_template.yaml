@@ -32,6 +32,22 @@ components:
   name: text_box_awayteam
   properties: {}
   type: TextBox
+- layout_properties: {grid_position: 'CWAFGT,OOOQSU'}
+  name: label_5
+  properties: {text: 'Heimtore:'}
+  type: Label
+- layout_properties: {grid_position: 'CWAFGT,CPFKVG'}
+  name: text_box_home_goals
+  properties: {}
+  type: TextBox
+- layout_properties: {grid_position: 'CWAFGT,NCOLPW'}
+  name: label_6
+  properties: {text: 'Auswärtstore:'}
+  type: Label
+- layout_properties: {grid_position: 'CWAFGT,DRZHCL'}
+  name: text_box_away_goals
+  properties: {}
+  type: TextBox
 - event_bindings: {click: button_save_click}
   layout_properties: {grid_position: 'LTBAMU,JUQJTG'}
   name: button_save

@@ -41,9 +41,11 @@ class add_new_match(add_new_matchTemplate):
   def button_save_click(self, **event_args):
     """This method is called when the button is clicked"""
     gameday = int(self.drop_down_gameday.selected_value)
-    home_tean = self.text_box_hometeam.text
+    home_team = self.text_box_hometeam.text
     away_team = self.text_box_awayteam.text
 
+    home_goals = self.text_box_home_goals.text
+    home_goals = self.text_box_away_goals_goals.text
     gameday = app_tables.top_matches.get(gameday=gameday)
     if gameday is not None:
       pass
