@@ -25,9 +25,9 @@ class Form1(Form1Template):
     top_match = app_tables.top_matches.get(season="2025/2026", gameday=gameday)
 
     home_score, away_score = "",""
-    if top_match["home_score"]:
+    if top_match["home_score"] is not None:
       home_score = str(top_match["home_score"])
-    if top_match["away_score"]:
+    if top_match["away_score"] is not None:
       away_score = str(top_match["away_score"])
       
     result_string = ""
