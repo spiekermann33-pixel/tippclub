@@ -31,7 +31,7 @@ class Form1(Form1Template):
       away_score = str(top_match["away_score"])
       
     result_string = ""
-    if home_score and away_score:
+    if home_score is not None and away_score is not None:
       result_string = "\t" + home_score + " : " + away_score
     self.label_matchup.text = top_match["home_team"] + \
             " : " + top_match["away_team"] + result_string
