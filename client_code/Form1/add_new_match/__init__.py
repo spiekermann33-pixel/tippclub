@@ -73,6 +73,7 @@ class add_new_match(add_new_matchTemplate):
       self.text_box_awayteam.text = gameday["away_team"]
       self.text_box_home_goals.text = gameday["home_score"]
       self.text_box_away_goals.text = gameday["away_score"]
+      self.text_box_jackpot.text = gameday["jackpot"]
     else:
       self.text_box_hometeam.text = ""
       self.text_box_awayteam.text = ""

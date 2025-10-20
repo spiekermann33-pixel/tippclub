@@ -18,6 +18,14 @@ components:
     name: label_matchup
     properties: {}
     type: Label
+  - layout_properties: {grid_position: 'QEHVNW,YTWOGT'}
+    name: label_2
+    properties: {align: right, text: 'Preisgeld:'}
+    type: Label
+  - layout_properties: {grid_position: 'QEHVNW,YKVVUY'}
+    name: label_jackpot
+    properties: {}
+    type: Label
   - components:
     - layout_properties: {}
       name: repeating_panel_user_tips

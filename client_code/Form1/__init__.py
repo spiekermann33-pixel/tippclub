@@ -35,6 +35,9 @@ class Form1(Form1Template):
       result_string = "\t" + home_score + " : " + away_score
     self.label_matchup.text = top_match["home_team"] + \
             " : " + top_match["away_team"] + result_string
+
+    self.label_jackpot.text = f"{top_match['jackpot']} €"
+
   def _set_drop_down_gameday(self, ):
     game_days = []
     for row in app_tables.top_matches.search():
