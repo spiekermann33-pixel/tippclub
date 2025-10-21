@@ -59,11 +59,14 @@ class add_new_match(add_new_matchTemplate):
     else:
       gameday = int(self.drop_down_gameday.selected_value)
       jackpot = self.text_box_jackpot.text
-      if home_team is not None and away_team is not None and jackpot is not None:
+      if home_team and away_team and jackpot:
         season = self.label_season.text
         app_tables.top_matches.add_row(gameday=gameday,season=season,home_team=home_team,\
                                     away_team=away_team,home_score=home_goals,\
                                       away_score=away_goals, jackpot=jackpot)
+      else:
+        self.rich_text_save_error.content = \
+              """<span style="color:red">Heim-, Auswärtsteam und Preisgeld muss gepflegt sein</span>."""
         
   def drop_down_gameday_change(self, **event_args):
     """This method is called when an item is selected"""
@@ -79,6 +82,6 @@ class add_new_match(add_new_matchTemplate):
       self.text_box_awayteam.text = ""
       self.text_box_home_goals.text = ""
       self.text_box_away_goals.text = ""
-
+      self.text_box_jackpot.text = "48"
     
 
