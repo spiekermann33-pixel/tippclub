@@ -26,9 +26,9 @@ def get_user_tips(season="2025/2026",gameday=1):
       user_tips.append({"Name":user['user_name'], "Tipp": "","Strafe":"2 €"})
   return user_tips
 
-def get_matchup(season="2025/2026",gameday=1):
+def get_matchup_jackpot(season="2025/2026",gameday=1):
   gameday = app_tables.top_matches.get(season=season, gameday=gameday)
-  return gameday["home_team"] + " : " + gameday["away_team"]
+  return gameday["home_team"] + " : " + gameday["away_team"], gameday['jackpot']
 
 # Hilfsfunktion: BlobMedia oder LazyMedia -> Base64-String
 def to_data_url(media_obj):
@@ -54,14 +54,14 @@ def create_tip_image(gameday):
   df_user_tips = pd.DataFrame(get_user_tips(gameday=gameday))
   df_user_tips["Sieg"] = ""
   df_user_tips["Tipp"] = df_user_tips["Tipp"] + "\t"
-  matchup = get_matchup(gameday=gameday)
+  matchup,jackpot = get_matchup_jackpot(gameday=gameday)
   
   # df_user_tips = get_team_logos(df_user_tips)
   # print(df_user_tips)
 
   nbsp = "\u00A0" 
   header_string = f"Spieltag: {gameday} {nbsp*8} Begegnung: {matchup}"
-  subtitle_string = f"Preisgeld: {48} € {nbsp*45} Ergebnis: __________"
+  subtitle_string = f"Preisgeld: {jackpot} € {nbsp*45} Ergebnis: __________"
   # Tabelle mit great-tables
   gt_tbl = (
     GT(df_user_tips)
