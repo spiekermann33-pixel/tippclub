@@ -41,8 +41,9 @@ class Form1(Form1Template):
   def _set_drop_down_gameday(self, ):
     game_days = []
     for row in app_tables.top_matches.search():
-      game_days.append(str(row["gameday"]))
+      game_days.append(row["gameday"])
     game_days.sort(reverse=True)
+    game_days = [str(d) for d in game_days]
     self.drop_down_gameday.items = game_days
 
   def _set_data_grid_user_tips(self, gameday):
