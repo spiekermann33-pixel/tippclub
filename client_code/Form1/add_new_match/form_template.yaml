@@ -79,6 +79,10 @@ components:
   name: button_save
   properties: {text: Speichern}
   type: Button
+- layout_properties: {grid_position: 'IYYZHU,IZFQAQ'}
+  name: rich_text_tip_template
+  properties: {content: dd}
+  type: RichText
 container:
   properties: {col_widths: '{"HJFXML":10,"MSIHBG":50}'}
   type: ColumnPanel

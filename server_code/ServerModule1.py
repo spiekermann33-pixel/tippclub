@@ -14,6 +14,7 @@ import os
 import base64
 from PIL import Image
 import requests
+from datetime import datetime, timedelta
 
 def get_user_tips(season="2025/2026",gameday=1):
   gameday = app_tables.top_matches.get(season=season, gameday=gameday)
@@ -115,20 +116,26 @@ def find_top_match():
   top_match = None
   min_rank_sum = float('inf')
   best_single_rank = float('inf')
+  weekdays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
 
   for match in matches:
     home_team = match['homeTeam']['name']
     away_team = match['awayTeam']['name']
 
+    # Zeitumrechnung: UTC zu MEZ/MESZ (vereinfacht +1h für Winterzeit, +2h für Sommerzeit)
+    # Für eine exakte Lösung empfiehlt sich 'pytz' oder 'zoneinfo'
+    dt_utc = datetime.strptime(match['utcDate'], "%Y-%m-%dT%H:%M:%SZ")
+    dt_local = dt_utc + timedelta(hours=1) # Standardmäßig +1h für deutsche Winterzeit
+
+    formatted_date = f"{weekdays[dt_local.weekday()]}, {dt_local.strftime('%d.%m. %H:%M')}"
+
     home_rank = table.get(home_team)
     away_rank = table.get(away_team)
 
-    if home_rank and away_rank:
+    if home_rank is not None and away_rank is not None:
       current_sum = home_rank + away_rank
-      # Beste Platzierung in diesem Spiel (für Tie-Breaker)
       current_best_rank = min(home_rank, away_rank)
 
-      # Logik: Geringste Summe ODER gleiche Summe aber besseres Team dabei
       if (current_sum < min_rank_sum) or \
       (current_sum == min_rank_sum and current_best_rank < best_single_rank):
         min_rank_sum = current_sum
@@ -138,7 +145,8 @@ def find_top_match():
           'away': away_team,
           'home_rank': home_rank,
           'away_rank': away_rank,
-          'sum': current_sum
+          'sum': current_sum,
+          'kickoff': formatted_date
         }
 
   return top_match

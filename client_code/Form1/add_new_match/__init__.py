@@ -96,9 +96,13 @@ class add_new_match(add_new_matchTemplate):
       game_dict = anvil.server.call('find_top_match')
     except:
       game_dict = None
-
+  
     if game_dict == None:
       print("Berechnen des Spiels fehlgeschlagen")
     else:
       self.text_box_hometeam.text = game_dict["home"]
       self.text_box_awayteam.text = game_dict["away"]
+
+      # set template text for group chat
+      template_text = f"""⚽ **Spieltag {self.drop_down_gameday.selected_value}** ⚽\n📅 Am {game_dict['kickoff']} Uhr 🕗\n{game_dict["home"]} - {game_dict["away"]} ⚔️\n\n💰 Im Pott sind aktuell: {self.text_box_jackpot.text}€ 💸\n\nGut Tipp 🤟🍀"""
+      self.rich_text_tip_template.content = template_text
