@@ -89,8 +89,15 @@ runtime_options:
   server_spec: {base: python310-standard}
   server_version: python3-sandbox
   version: 2
+secrets:
+  football-data-api:
+    type: secret
+    value: {WFPML22OEJKTTSLC: YPIP8Yw4ZowmthR1PXboijudb4wmdhHq0UMtxrpQfp2I+VucT8jlEpPghQ5gdfDl11LzmzPqEZbXAJ/9Im+kgaSNhBJfE15aD6hUcXcQnOMDLY17VPTkpESIpxxtc72tFLvmO/eP0mtx2Uo2THs6+fP/NkyWbkNZ6y0e7L50Bg==}
 services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/tables.yml
+- client_config: {}
+  server_config: {}
+  source: /runtime/services/anvil/secrets.yml
 startup_form: Form1

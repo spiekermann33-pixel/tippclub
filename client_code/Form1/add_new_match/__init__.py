@@ -85,5 +85,20 @@ class add_new_match(add_new_matchTemplate):
       self.text_box_home_goals.text = ""
       self.text_box_away_goals.text = ""
       self.text_box_jackpot.text = "48"
-    
 
+  @handle("button_auto_calculate_matchday", "click")
+  def button_auto_calculate_matchday_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    # function return: 
+    #{'home': 'Eintracht Frankfurt', 'away': 'Borussia Dortmund', 'home_rank': 7, 
+    #'away_rank': 2, 'sum': 9}
+    try:
+      game_dict = anvil.server.call('find_top_match')
+    except:
+      game_dict = None
+
+    if game_dict == None:
+      print("Berechnen des Spiels fehlgeschlagen")
+    else:
+      self.text_box_hometeam.text = game_dict["home"]
+      self.text_box_awayteam.text = game_dict["away"]

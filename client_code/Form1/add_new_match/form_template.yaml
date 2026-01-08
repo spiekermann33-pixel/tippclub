@@ -69,6 +69,11 @@ components:
   name: rich_text_save_error
   properties: {align: center, format: restricted_html}
   type: RichText
+- event_bindings: {}
+  layout_properties: {grid_position: 'LTBAMU,KSILIH'}
+  name: button_auto_calculate_matchday
+  properties: {text: Topspiel berechnen}
+  type: Button
 - event_bindings: {click: button_save_click}
   layout_properties: {grid_position: 'LTBAMU,JUQJTG'}
   name: button_save

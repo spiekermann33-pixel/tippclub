@@ -1,3 +1,4 @@
+import anvil.secrets
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
@@ -12,6 +13,7 @@ import io
 import os
 import base64
 from PIL import Image
+import requests
 
 def get_user_tips(season="2025/2026",gameday=1):
   gameday = app_tables.top_matches.get(season=season, gameday=gameday)
@@ -83,3 +85,60 @@ def create_tip_image(gameday):
   
   # als BlobMedia zurückgeben
   return anvil.BlobMedia("image/png", png_bytes, name=f"Tipprunde_{gameday}.png")
+
+# Konfiguration
+BASE_URL = 'https://api.football-data.org/v4/'
+HEADERS = {'X-Auth-Token': anvil.secrets.get_secret('football-data-api')}
+LEAGUE = 'BL1' # Bundesliga
+
+def get_data():
+    # 1. Aktuelle Tabelle abrufen
+    standings_url = f"{BASE_URL}competitions/{LEAGUE}/standings"
+    standings_res = requests.get(standings_url, headers=HEADERS).json()
+    # Mapping von Team-Name zu Tabellenplatz erstellen
+    table = {}
+    for entry in standings_res['standings'][0]['table']:
+        table[entry['team']['name']] = entry['position']
+    # 2. Nächsten Spieltag abrufen
+    matches_url = f"{BASE_URL}competitions/{LEAGUE}/matches?status=SCHEDULED"
+    matches_res = requests.get(matches_url, headers=HEADERS).json()
+    # Wir nehmen den Spieltag des ersten gefundenen Spiels als "nächsten Spieltag"
+    if not matches_res['matches']:
+        return "Keine kommenden Spiele gefunden.", None
+    next_matchday = matches_res['matches'][0]['matchday']
+    upcoming_matches = [m for m in matches_res['matches'] if m['matchday'] == next_matchday]
+    return table, upcoming_matches
+  
+@anvil.server.callable
+def find_top_match():
+  table, matches = get_data()
+  top_match = None
+  min_rank_sum = float('inf')
+  best_single_rank = float('inf')
+
+  for match in matches:
+    home_team = match['homeTeam']['name']
+    away_team = match['awayTeam']['name']
+
+    home_rank = table.get(home_team)
+    away_rank = table.get(away_team)
+
+    if home_rank and away_rank:
+      current_sum = home_rank + away_rank
+      # Beste Platzierung in diesem Spiel (für Tie-Breaker)
+      current_best_rank = min(home_rank, away_rank)
+
+      # Logik: Geringste Summe ODER gleiche Summe aber besseres Team dabei
+      if (current_sum < min_rank_sum) or \
+      (current_sum == min_rank_sum and current_best_rank < best_single_rank):
+        min_rank_sum = current_sum
+        best_single_rank = current_best_rank
+        top_match = {
+          'home': home_team,
+          'away': away_team,
+          'home_rank': home_rank,
+          'away_rank': away_rank,
+          'sum': current_sum
+        }
+
+  return top_match
