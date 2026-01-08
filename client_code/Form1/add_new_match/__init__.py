@@ -22,19 +22,21 @@ class add_new_match(add_new_matchTemplate):
   def _set_drop_down_gameday(self):
     """Set the drop-down menu items for the game days."""
     game_days = []
-    # Retrieve all game days from the database
+    # 1. Holen der Daten als Integers für korrekte Sortierung
     for row in app_tables.top_matches.search():
-      game_days.append(str(row["gameday"]))
+      if row["gameday"]:
+        game_days.append(int(row["gameday"]))
+    # 2. Numerisch sortieren (Absteigend: Höchste Zahl zuerst)
     game_days.sort(reverse=True)
-    # Generate a list of all possible game days (1 to 34)
+    # 3. Liste für das Dropdown (1 bis 34)
     all_game_days = [str(i) for i in range(1, 35)]
     self.drop_down_gameday.items = all_game_days
-    # Determine the highest existing game day
+    # 4. Höchsten Spieltag ermitteln
     if game_days:
-      highest_existing_gameday = int(game_days[0])
+      highest_existing_gameday = game_days[0] # Das ist jetzt sicher eine Zahl
     else:
       highest_existing_gameday = 0
-    # Set the selected item to the highest existing game day + 1
+    # 5. Den nächsten Spieltag auswählen (max. 34)
     selected_gameday = str(min(highest_existing_gameday + 1, 34))
     self.drop_down_gameday.selected_value = selected_gameday
 
