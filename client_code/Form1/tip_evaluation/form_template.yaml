@@ -3,5 +3,14 @@ components:
   name: label_1
   properties: {text: Auswertung der Wetten der Saison 2025/2026}
   type: Label
+- event_bindings: {}
+  layout_properties: {grid_position: 'RMFAAR,TLQGMH'}
+  name: plot_tip_evaluation
+  properties: {}
+  type: Plot
+- layout_properties: {grid_position: 'EPKMRP,PMPLBB'}
+  name: plot_tip_money
+  properties: {}
+  type: Plot
 container: {type: ColumnPanel}
 is_package: true

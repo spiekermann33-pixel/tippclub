@@ -54,6 +54,11 @@ components:
   properties: {col_widths: '{}'}
   type: ColumnPanel
 - components:
+  - event_bindings: {click: tips_evaluation_click}
+    layout_properties: {}
+    name: tips_evaluation
+    properties: {text: Auswertung anzeigen}
+    type: Button
   - event_bindings: {click: add_new_topmatch_click}
     layout_properties: {}
     name: add_new_topmatch
