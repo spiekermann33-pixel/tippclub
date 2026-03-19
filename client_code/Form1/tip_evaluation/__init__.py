@@ -82,3 +82,7 @@ class tip_evaluation(tip_evaluationTemplate):
     )
     
     self.plot_tip_money.figure = fig_money
+
+  def button_back_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    open_form('Form1')
