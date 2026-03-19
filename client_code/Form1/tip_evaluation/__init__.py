@@ -23,7 +23,7 @@ class tip_evaluation(tip_evaluationTemplate):
                                                home_score=q.not_(None),
                                                away_score=q.not_(None))
     for top_match in top_matches:
-      print(top_match["home_team"],top_match["away_team"],top_match["jackpot"])
+      # print(top_match["home_team"],top_match["away_team"],top_match["jackpot"])
       users_with_correct_tip = app_tables.tips.search(gameday=top_match,
                                                     home_score=top_match['home_score'],
                                                     away_score=top_match['away_score'])
@@ -36,7 +36,7 @@ class tip_evaluation(tip_evaluationTemplate):
 
         user_tip_evaluation.update({user_name : user_evaluation})
 
-      print(user_tip_evaluation)
+      # print(user_tip_evaluation)
 
     user_tip_evaluation = sorted(user_tip_evaluation.items(), key=lambda x: x[1]["won_games"], reverse=True)
     
