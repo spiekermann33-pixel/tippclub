@@ -3,6 +3,11 @@ components:
   name: label_1
   properties: {text: Auswertung der Wetten der Saison 2025/2026}
   type: Label
+- event_bindings: {click: button_back_click}
+  layout_properties: {grid_position: 'ABCDEF,GHIJKL'}
+  name: button_back
+  properties: {text: Zurück zur Startseite}
+  type: Button
 - event_bindings: {}
   layout_properties: {grid_position: 'RMFAAR,TLQGMH'}
   name: plot_tip_evaluation
