@@ -31,7 +31,7 @@ components:
         type: Label
       layout_properties: {grid_position: 'GGGGGG,HHHHHH'}
       name: flow_jackpot
-      properties: {align: right, spacing_above: none, spacing_below: none}
+      properties: {align: center, spacing_above: none, spacing_below: none}
       type: FlowPanel
     layout_properties: {grid_position: 'QEHVNW,FUTRCG'}
     name: card_match_info
