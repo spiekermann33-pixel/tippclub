@@ -57,33 +57,185 @@ def create_tip_image(gameday):
   df_user_tips = pd.DataFrame(get_user_tips(gameday=gameday))
   df_user_tips["Sieg"] = ""
   df_user_tips["Tipp"] = df_user_tips["Tipp"] + "\t"
-  matchup,jackpot = get_matchup_jackpot(gameday=gameday)
-  
-  # df_user_tips = get_team_logos(df_user_tips)
-  # print(df_user_tips)
+  matchup, jackpot = get_matchup_jackpot(gameday=gameday)
 
-  nbsp = "\u00A0" 
-  header_string = f"Spieltag: {gameday} {nbsp*8} Begegnung: {matchup}"
-  subtitle_string = f"Preisgeld: {jackpot} € {nbsp*45} Ergebnis: __________"
-  # Tabelle mit great-tables
-  gt_tbl = (
-    GT(df_user_tips)
-      .tab_header(title=header_string, subtitle=subtitle_string)
-      .tab_options(table_font_size="14px")
-  )
+  # Tabellenzeilen als HTML
+  rows_html = ""
+  for _, row in df_user_tips.iterrows():
+    strafe_cell = (
+      f'<td class="strafe">{row["Strafe"]}</td>'
+      if row["Strafe"]
+      else '<td></td>'
+    )
+    rows_html += f"""
+      <tr>
+        <td class="name">{row['Name']}</td>
+        <td class="tipp">{str(row['Tipp']).strip()}</td>
+        {strafe_cell}
+        <td class="sieg">{row['Sieg']}</td>
+      </tr>"""
 
-  # HTML erzeugen
-  html_str = gt_tbl.as_raw_html()
+  html_str = f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page {{
+    size: auto;
+    margin: 0;
+  }}
+  body {{
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: #F4EFF4;
+    margin: 0;
+    padding: 16px;
+  }}
+  .card {{
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    max-width: 520px;
+    margin: 0 auto;
+    page-break-inside: avoid;
+  }}
+  .header {{
+    background: #6750A4;
+    color: white;
+    padding: 16px 22px 14px;
+  }}
+  .header .spieltag {{
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 4px;
+  }}
+  .header .matchup {{
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }}
+  .header .meta {{
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    opacity: 0.88;
+    border-top: 1px solid rgba(255,255,255,0.25);
+    padding-top: 10px;
+  }}
+  .header .meta span {{
+    font-weight: 500;
+  }}
+  .header .meta .value {{
+    font-weight: 700;
+    margin-left: 4px;
+  }}
+  table {{
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: avoid;
+  }}
+  thead tr {{
+    background: #EDE7F6;
+  }}
+  thead th {{
+    padding: 8px 16px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #4A148C;
+  }}
+  thead th.center {{
+    text-align: center;
+  }}
+  tbody tr {{
+    page-break-inside: avoid;
+  }}
+  tbody tr:nth-child(even) {{
+    background: #FAFAFA;
+  }}
+  tbody tr:nth-child(odd) {{
+    background: #FFFFFF;
+  }}
+  tbody td {{
+    padding: 9px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid #F0EBF8;
+    color: #1C1B1F;
+  }}
+  tbody tr:last-child td {{
+    border-bottom: none;
+  }}
+  td.name {{
+    font-weight: 500;
+  }}
+  td.tipp {{
+    font-weight: 700;
+    color: #6750A4;
+    letter-spacing: 0.5px;
+  }}
+  td.strafe {{
+    color: #B3261E;
+    font-weight: 700;
+    text-align: center;
+  }}
+  td.sieg {{
+    color: #386A20;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+  }}
+  .footer {{
+    padding: 8px 16px;
+    text-align: right;
+    font-size: 10px;
+    color: #CAC4D0;
+    letter-spacing: 0.3px;
+  }}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="spieltag">Spieltag {gameday}</div>
+      <div class="matchup">{matchup}</div>
+      <div class="meta">
+        <span>Preisgeld: <span class="value">{jackpot} €</span></span>
+        <span>Ergebnis: <span class="value">__________</span></span>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Tipp</th>
+          <th class="center">Strafe</th>
+          <th class="center">Sieg</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows_html}
+      </tbody>
+    </table>
+    <div class="footer">TippClub · Saison 2025/2026</div>
+  </div>
+</body>
+</html>"""
 
   # Mit WeasyPrint HTML -> PNG in Memory konvertieren
   png_bytes = weasyprint.HTML(string=html_str).write_png()
-  
+
   img = Image.open(BytesIO(png_bytes))
   cropped = img.crop(img.getbbox())
   out = BytesIO()
   cropped.save(out, format="PNG")
   png_bytes = out.getvalue()
-  
+
   # als BlobMedia zurückgeben
   return anvil.BlobMedia("image/png", png_bytes, name=f"Tipprunde_{gameday}.png")
 

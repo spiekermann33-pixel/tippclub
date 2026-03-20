@@ -24,15 +24,15 @@ class Form1(Form1Template):
   def set_matchup_label(self, gameday):
     top_match = app_tables.top_matches.get(season="2025/2026", gameday=gameday)
 
-    home_score, away_score = "",""
+    home_score, away_score = None, None
     if top_match["home_score"] is not None:
       home_score = str(top_match["home_score"])
     if top_match["away_score"] is not None:
       away_score = str(top_match["away_score"])
-      
+
     result_string = ""
     if home_score is not None and away_score is not None:
-      result_string = "\t" + home_score + " : " + away_score
+      result_string = "  " + home_score + " : " + away_score
     self.label_matchup.text = top_match["home_team"] + \
             " : " + top_match["away_team"] + result_string
 
