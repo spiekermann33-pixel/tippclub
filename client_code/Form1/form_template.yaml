@@ -1,31 +1,44 @@
 components:
 - components:
-  - layout_properties: {grid_position: 'CSZWWV,OOWBFH'}
-    name: rich_text_1
-    properties: {align: center, content: '##### Spieltag:'}
-    type: RichText
-  - event_bindings: {change: drop_down_gameday_change, show: drop_down_gameday_show}
-    layout_properties: {grid_position: 'CSZWWV,VGFQNI'}
-    name: drop_down_gameday
-    properties: {align: full}
-    type: DropDown
+  - components:
+    - layout_properties: {grid_position: 'AAAAAA,BBBBBB'}
+      name: label_spieltag_header
+      properties: {text: Spieltag auswählen, role: title, spacing_above: none, spacing_below: small}
+      type: Label
+    - event_bindings: {change: drop_down_gameday_change, show: drop_down_gameday_show}
+      layout_properties: {grid_position: 'CCCCCC,DDDDDD'}
+      name: drop_down_gameday
+      properties: {align: full, role: outlined, spacing_above: none, spacing_below: none}
+      type: DropDown
+    layout_properties: {grid_position: 'CSZWWV,OOWBFH'}
+    name: card_spieltag
+    properties: {role: elevated-card, col_widths: '{}'}
+    type: ColumnPanel
+  - components:
+    - data_bindings: []
+      layout_properties: {grid_position: 'EEEEEE,FFFFFF'}
+      name: label_matchup
+      properties: {align: center, role: headline, bold: true, spacing_above: none,
+        spacing_below: small}
+      type: Label
+    - layout_properties: {grid_position: 'GGGGGG,HHHHHH'}
+      name: label_2
+      properties: {align: right, text: 'Preisgeld:', role: body, bold: true, spacing_above: none,
+        spacing_below: none}
+      type: Label
+    - layout_properties: {grid_position: 'GGGGGG,IIIIII'}
+      name: label_jackpot
+      properties: {bold: true, font_size: 16, foreground: '#2e7d32', spacing_above: none,
+        spacing_below: none}
+      type: Label
+    layout_properties: {grid_position: 'QEHVNW,FUTRCG'}
+    name: card_match_info
+    properties: {role: tonal-card, col_widths: '{"0": 50, "1": 50}'}
+    type: ColumnPanel
   - layout_properties: {grid_position: 'SHEMRB,JUKKSF'}
     name: spacer_1
-    properties: {height: 32}
+    properties: {height: 12}
     type: Spacer
-  - data_bindings: []
-    layout_properties: {grid_position: 'QEHVNW,FUTRCG'}
-    name: label_matchup
-    properties: {}
-    type: Label
-  - layout_properties: {grid_position: 'QEHVNW,YTWOGT'}
-    name: label_2
-    properties: {align: right, text: 'Preisgeld:'}
-    type: Label
-  - layout_properties: {grid_position: 'QEHVNW,YKVVUY'}
-    name: label_jackpot
-    properties: {}
-    type: Label
   - components:
     - layout_properties: {}
       name: repeating_panel_user_tips
@@ -37,17 +50,19 @@ components:
       columns:
       - {data_key: name, id: JKSDUP, title: Name}
       - {data_key: tip, id: VJQQOR, title: Tipp}
+      role: tonal-data-grid
       rows_per_page: 25
     type: DataGrid
   - event_bindings: {click: button_save_click}
     layout_properties: {grid_position: 'NXNUFC,OHTEBK'}
     name: button_save
-    properties: {text: Speichern}
+    properties: {text: Speichern, icon: 'fa:save', role: filled-button, spacing_above: medium}
     type: Button
   - event_bindings: {click: button_save_and_download_click}
     layout_properties: {grid_position: 'NXNUFC,LZFTVV'}
     name: button_save_and_download
-    properties: {text: Speichern & Tippzettel erstellen}
+    properties: {text: 'Speichern & Tippzettel erstellen', icon: 'fa:download', role: tonal-button,
+      spacing_above: medium}
     type: Button
   layout_properties: {slot: default}
   name: content_panel
@@ -57,12 +72,12 @@ components:
   - event_bindings: {click: tips_evaluation_click}
     layout_properties: {}
     name: tips_evaluation
-    properties: {text: Auswertung anzeigen}
+    properties: {text: Auswertung, icon: 'fa:chart-bar', role: tonal-button}
     type: Button
   - event_bindings: {click: add_new_topmatch_click}
     layout_properties: {}
     name: add_new_topmatch
-    properties: {text: Neues Topspiel anlgen}
+    properties: {text: Neues Topspiel anlegen, icon: 'fa:plus', role: outlined-button}
     type: Button
   layout_properties: {slot: nav-right}
   name: navbar_links
@@ -70,7 +85,7 @@ components:
   type: FlowPanel
 - layout_properties: {slot: title}
   name: label_1
-  properties: {text: 'Eintragen von Tipps:'}
+  properties: {text: 'TippClub', bold: true, font_size: 18}
   type: Label
 container:
   properties: {html: '@theme:standard-page.html'}
