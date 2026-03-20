@@ -80,46 +80,51 @@ def create_tip_image(gameday):
 <head>
 <meta charset="utf-8">
 <style>
+  @page {{
+    size: auto;
+    margin: 0;
+  }}
   body {{
     font-family: 'Helvetica Neue', Arial, sans-serif;
     background: #F4EFF4;
     margin: 0;
-    padding: 28px;
+    padding: 16px;
   }}
   .card {{
     background: white;
-    border-radius: 20px;
+    border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-    max-width: 560px;
+    max-width: 520px;
     margin: 0 auto;
+    page-break-inside: avoid;
   }}
   .header {{
     background: #6750A4;
     color: white;
-    padding: 22px 28px 18px;
+    padding: 16px 22px 14px;
   }}
   .header .spieltag {{
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 1.2px;
     text-transform: uppercase;
     opacity: 0.75;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }}
   .header .matchup {{
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     line-height: 1.2;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
   }}
   .header .meta {{
     display: flex;
     justify-content: space-between;
-    font-size: 13px;
+    font-size: 11px;
     opacity: 0.88;
     border-top: 1px solid rgba(255,255,255,0.25);
-    padding-top: 12px;
+    padding-top: 10px;
   }}
   .header .meta span {{
     font-weight: 500;
@@ -131,14 +136,15 @@ def create_tip_image(gameday):
   table {{
     width: 100%;
     border-collapse: collapse;
+    page-break-inside: avoid;
   }}
   thead tr {{
     background: #EDE7F6;
   }}
   thead th {{
-    padding: 11px 20px;
+    padding: 8px 16px;
     text-align: left;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -147,6 +153,9 @@ def create_tip_image(gameday):
   thead th.center {{
     text-align: center;
   }}
+  tbody tr {{
+    page-break-inside: avoid;
+  }}
   tbody tr:nth-child(even) {{
     background: #FAFAFA;
   }}
@@ -154,8 +163,8 @@ def create_tip_image(gameday):
     background: #FFFFFF;
   }}
   tbody td {{
-    padding: 13px 20px;
-    font-size: 15px;
+    padding: 9px 16px;
+    font-size: 13px;
     border-bottom: 1px solid #F0EBF8;
     color: #1C1B1F;
   }}
@@ -178,13 +187,13 @@ def create_tip_image(gameday):
   td.sieg {{
     color: #386A20;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 15px;
     text-align: center;
   }}
   .footer {{
-    padding: 10px 20px;
+    padding: 8px 16px;
     text-align: right;
-    font-size: 11px;
+    font-size: 10px;
     color: #CAC4D0;
     letter-spacing: 0.3px;
   }}
