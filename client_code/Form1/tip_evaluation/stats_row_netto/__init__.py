@@ -9,3 +9,4 @@ class stats_row_netto(stats_row_nettoTemplate):
     self.label_brutto.text = self.item.get("brutto", "")
     self.label_strafe.text = self.item.get("strafe", "")
     self.label_netto.text = self.item.get("netto", "")
+    self.label_siege.text = self.item.get("siege", "")
