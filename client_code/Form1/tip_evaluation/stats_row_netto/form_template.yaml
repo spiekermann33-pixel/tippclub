@@ -1,0 +1,19 @@
+components:
+- layout_properties: {column: SNNAM0}
+  name: label_name
+  properties: {}
+  type: Label
+- layout_properties: {column: SNBRU0}
+  name: label_brutto
+  properties: {}
+  type: Label
+- layout_properties: {column: SNSTR0}
+  name: label_strafe
+  properties: {}
+  type: Label
+- layout_properties: {column: SNNET0}
+  name: label_netto
+  properties: {}
+  type: Label
+container: {type: DataRowPanel}
+is_package: true
