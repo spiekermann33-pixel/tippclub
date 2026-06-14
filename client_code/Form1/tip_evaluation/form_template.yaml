@@ -1,30 +1,140 @@
 components:
-- layout_properties: {grid_position: 'LSQMHU,ILBPHU'}
+- layout_properties: {grid_position: 'TITLAA,TITLBB'}
   name: label_1
-  properties: {text: Auswertung der Wetten der Saison 2025/2026}
+  properties: {text: Auswertung der Wetten der Saison 2025/2026, role: title}
   type: Label
 - event_bindings: {click: button_back_click}
-  layout_properties: {grid_position: 'ABCDEF,GHIJKL'}
+  layout_properties: {grid_position: 'BAKBTN,BAKBTX'}
   name: button_back
-  properties: {text: Zurück zur Startseite}
+  properties: {text: Zurück zur Startseite, role: outlined-button}
   type: Button
-- layout_properties: {grid_position: 'MNOPQR,STUVWX'}
+- layout_properties: {grid_position: 'LABGDF,LABGDX'}
   name: label_gameday_filter
   properties: {text: 'Auswertung bis Spieltag:'}
   type: Label
 - event_bindings: {change: drop_down_gameday_change}
-  layout_properties: {grid_position: 'YZABCD,EFGHIJ'}
+  layout_properties: {grid_position: 'DDGDAY,DDGDAX'}
   name: drop_down_gameday
   properties: {}
   type: DropDown
-- event_bindings: {}
-  layout_properties: {grid_position: 'RMFAAR,TLQGMH'}
-  name: plot_tip_evaluation
-  properties: {}
-  type: Plot
-- layout_properties: {grid_position: 'EPKMRP,PMPLBB'}
-  name: plot_tip_money
-  properties: {}
-  type: Plot
+- components:
+  - event_bindings: {click: btn_view_1_click}
+    name: btn_view_1
+    properties: {text: Richtige Tipps, role: filled-button}
+    type: Button
+  - event_bindings: {click: btn_view_2_click}
+    name: btn_view_2
+    properties: {text: Gewinn, role: outlined-button}
+    type: Button
+  - event_bindings: {click: btn_view_3_click}
+    name: btn_view_3
+    properties: {text: Strafen, role: outlined-button}
+    type: Button
+  - event_bindings: {click: btn_view_4_click}
+    name: btn_view_4
+    properties: {text: Netto Gewinn, role: outlined-button}
+    type: Button
+  layout_properties: {grid_position: 'TABFLO,TABFLX'}
+  name: flow_tab_buttons
+  properties: {spacing_above: medium, spacing_below: small}
+  type: FlowPanel
+- components:
+  - layout_properties: {grid_position: 'PLCAA1,PLCAB1'}
+    name: plot_correct_tips
+    properties: {}
+    type: Plot
+  - components:
+    - layout_properties: {}
+      name: rp_correct
+      properties: {item_template: Form1.tip_evaluation.stats_row, spacing_above: none,
+        spacing_below: none}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'DGCAA1,DGCAB1'}
+    name: data_grid_correct
+    properties:
+      columns:
+      - {data_key: name, id: SRNAM0, title: Spieler}
+      - {data_key: value, id: SRVAL0, title: Richtige Tipps}
+      role: tonal-data-grid
+      rows_per_page: 25
+    type: DataGrid
+  layout_properties: {grid_position: 'PNV1AA,PNV1AB'}
+  name: panel_view_1
+  properties: {col_widths: '{}'}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'PLCBA1,PLCBB1'}
+    name: plot_money
+    properties: {}
+    type: Plot
+  - components:
+    - layout_properties: {}
+      name: rp_money
+      properties: {item_template: Form1.tip_evaluation.stats_row, spacing_above: none,
+        spacing_below: none}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'DGMBA1,DGMBB1'}
+    name: data_grid_money
+    properties:
+      columns:
+      - {data_key: name, id: SRNAM0, title: Spieler}
+      - {data_key: value, id: SRVAL0, title: 'Gewinn (€)'}
+      role: tonal-data-grid
+      rows_per_page: 25
+    type: DataGrid
+  layout_properties: {grid_position: 'PNV2AA,PNV2AB'}
+  name: panel_view_2
+  properties: {col_widths: '{}', visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'PLCCA1,PLCCB1'}
+    name: plot_penalties
+    properties: {}
+    type: Plot
+  - components:
+    - layout_properties: {}
+      name: rp_penalties
+      properties: {item_template: Form1.tip_evaluation.stats_row, spacing_above: none,
+        spacing_below: none}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'DGPCA1,DGPCB1'}
+    name: data_grid_penalties
+    properties:
+      columns:
+      - {data_key: name, id: SRNAM0, title: Spieler}
+      - {data_key: value, id: SRVAL0, title: 'Strafen (€)'}
+      role: tonal-data-grid
+      rows_per_page: 25
+    type: DataGrid
+  layout_properties: {grid_position: 'PNV3AA,PNV3AB'}
+  name: panel_view_3
+  properties: {col_widths: '{}', visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'PLCDA1,PLCDB1'}
+    name: plot_net
+    properties: {}
+    type: Plot
+  - components:
+    - layout_properties: {}
+      name: rp_net
+      properties: {item_template: Form1.tip_evaluation.stats_row_netto, spacing_above: none,
+        spacing_below: none}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'DGNDA1,DGNDB1'}
+    name: data_grid_net
+    properties:
+      columns:
+      - {data_key: name, id: SNNAM0, title: Spieler}
+      - {data_key: brutto, id: SNBRU0, title: 'Gewinn Brutto (€)'}
+      - {data_key: strafe, id: SNSTR0, title: 'Strafen (€)'}
+      - {data_key: netto, id: SNNET0, title: 'Gewinn Netto (€)'}
+      role: tonal-data-grid
+      rows_per_page: 25
+    type: DataGrid
+  layout_properties: {grid_position: 'PNV4AA,PNV4AB'}
+  name: panel_view_4
+  properties: {col_widths: '{}', visible: false}
+  type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true

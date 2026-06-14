@@ -12,6 +12,8 @@ unique_ids:
     Form1.add_new_match: '1760555300433933677905660.7981'
     Form1.add_tips_json: '1771660441484886116850031.1365'
     Form1.tip_evaluation: '1760190851089451706459773.18066'
+    Form1.tip_evaluation.stats_row: '1760190851089451706459773.18067'
+    Form1.tip_evaluation.stats_row_netto: '1760190851089451706459773.18068'
   modules: {}
   scripts: {}
   server_modules:

@@ -1,0 +1,11 @@
+components:
+- layout_properties: {column: SRNAM0}
+  name: label_name
+  properties: {}
+  type: Label
+- layout_properties: {column: SRVAL0}
+  name: label_value
+  properties: {}
+  type: Label
+container: {type: DataRowPanel}
+is_package: true
