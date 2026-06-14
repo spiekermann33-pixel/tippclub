@@ -142,7 +142,8 @@ class tip_evaluation(tip_evaluationTemplate):
         "name": u,
         "brutto": f"{s['money']:.2f} €",
         "strafe": f"{s['penalties']:.2f} €",
-        "netto": f"{s['net']:.2f} €"
+        "netto": f"{s['net']:.2f} €",
+        "siege": str(s["correct"])
       }
       for u, s in sorted_net
     ]

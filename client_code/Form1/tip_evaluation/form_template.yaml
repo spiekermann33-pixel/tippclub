@@ -129,6 +129,7 @@ components:
       - {data_key: brutto, id: SNBRU0, title: 'Gewinn Brutto (€)'}
       - {data_key: strafe, id: SNSTR0, title: 'Strafen (€)'}
       - {data_key: netto, id: SNNET0, title: 'Gewinn Netto (€)'}
+      - {data_key: siege, id: SNSIEG, title: Richtige Tipps}
       role: tonal-data-grid
       rows_per_page: 25
     type: DataGrid

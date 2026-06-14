@@ -15,5 +15,9 @@ components:
   name: label_netto
   properties: {}
   type: Label
+- layout_properties: {column: SNSIEG}
+  name: label_siege
+  properties: {}
+  type: Label
 container: {type: DataRowPanel}
 is_package: true
