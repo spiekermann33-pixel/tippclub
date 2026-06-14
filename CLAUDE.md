@@ -31,7 +31,7 @@ python -m anvil.run_app_via_uplink <AppPackageName>
 ### Key Forms (`client_code/Form1/`)
 
 - **Form1**: Main page — gameday selector, matchup display, user tip entry grid, save/download
-- **tip_evaluation/**: Statistics page with Plotly charts (wins, prize money per player, matchday filter)
+- **tip_evaluation/**: Statistics page with 4 tab views (Richtige Tipps, Gewinn, Strafen, Netto Gewinn) — each with a Plotly chart and a DataGrid table; matchday filter applies to all views. Sub-templates: `stats_row/` (2-column) and `stats_row_netto/` (4-column)
 - **add_new_match/**: Admin form to add/edit matches; has auto-calculate via football-data.org API
 - **add_tips_json/**: JSON import subform
 - **RowTemplate1–4, ItemTemplate1**: Templates used inside `RepeatingPanel` components
@@ -67,5 +67,6 @@ Football-data.org API key is stored as an Anvil secret: `anvil.secrets.get_secre
 ## Configuration Files
 
 - `anvil.yaml`: Central config — app name, DB schema, runtime (Python 3.10), secrets, startup form
-- `.anvil_editor.yaml`: Unique IDs for forms/assets used by Anvil IDE — do not edit manually
+- `.anvil_editor.yaml`: Unique IDs for forms/assets used by Anvil IDE — new forms must be registered here with a unique ID
+- **Branch names**: Anvil only accepts letters, numbers, underscores and hyphens — no slashes. Use `claude-feature-name` not `claude/feature-name`.
 - `theme/parameters.yaml`: Material Design 3 color scheme (primary: #6750A4 purple)
